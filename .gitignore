@@ -1,0 +1,43 @@
+# Android Studio and IntelliJ
+*.iml
+.idea/
+*.iws
+*.ipr
+*.class
+
+# Gradle
+.gradle/
+build/
+**/build/
+local.properties
+
+# Kotlin/Java
+*.jar
+*.war
+*.ear
+*.class
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Generated files
+/captures/
+.externalNativeBuild/
+.cxx/
+
+# Android / App
+/app/release/
+/app/debug/
+/app/*.apk
+/app/*.aab
+
+# Misc
+*.jks
+*.keystore
+
+# Local configuration
+*.properties

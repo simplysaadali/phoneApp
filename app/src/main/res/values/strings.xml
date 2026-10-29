@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PhoneApp</string>
+    <string name="no_contacts">No contacts found.\nTap + to add a new contact.</string>
+    <string name="first_name">First Name *</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone">Phone *</string>
+    <string name="email">Email</string>
+    <string name="address">Address</string>
+    <string name="notes">Notes</string>
+    <string name="save">Save Contact</string>
+    <string name="add_contact">Add Contact</string>
+    <string name="edit_contact">Edit Contact</string>
+    <string name="delete_contact">Delete Contact</string>
+    <string name="search_contacts">Search contacts…</string>
+</resources>
