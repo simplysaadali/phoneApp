@@ -3,13 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/contactListFragment">
+    app:startDestination="@id/recentCallsFragment">
+
+    <!-- Recent Calls Screen -->
+    <fragment
+        android:id="@+id/recentCallsFragment"
+        android:name="com.example.phoneapp.ui.RecentCallsFragment"
+        android:label="@string/title_recents"
+        tools:layout="@layout/fragment_recent_calls">
+
+        <action
+            android:id="@+id/action_recentCallsFragment_to_contactDetailFragment"
+            app:destination="@id/contactDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="contactId"
+                app:argType="long" />
+        </action>
+    </fragment>
 
     <!-- Contact List Screen -->
     <fragment
         android:id="@+id/contactListFragment"
         android:name="com.example.phoneapp.ui.ContactListFragment"
-        android:label="Contacts"
+        android:label="@string/title_contacts"
         tools:layout="@layout/fragment_contact_list">
 
         <!-- Navigate to Contact Detail -->
@@ -19,9 +39,13 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:popExitAnim="@anim/slide_out_right">
+            <argument
+                android:name="contactId"
+                app:argType="long" />
+        </action>
 
-        <!-- Navigate to Add/Edit Contact (new contact: contactId = 0) -->
+        <!-- Navigate to Add/Edit Contact -->
         <action
             android:id="@+id/action_contactListFragment_to_addEditContactFragment"
             app:destination="@id/addEditContactFragment"
@@ -35,11 +59,18 @@
         </action>
     </fragment>
 
+    <!-- Dialpad Screen -->
+    <fragment
+        android:id="@+id/dialpadFragment"
+        android:name="com.example.phoneapp.ui.DialpadFragment"
+        android:label="@string/title_dialpad"
+        tools:layout="@layout/fragment_dialpad" />
+
     <!-- Contact Detail Screen -->
     <fragment
         android:id="@+id/contactDetailFragment"
         android:name="com.example.phoneapp.ui.ContactDetailFragment"
-        android:label="Contact Detail"
+        android:label="Contact Details"
         tools:layout="@layout/fragment_contact_detail">
 
         <argument
@@ -64,7 +95,7 @@
     <fragment
         android:id="@+id/addEditContactFragment"
         android:name="com.example.phoneapp.ui.AddEditContactFragment"
-        android:label="Add Contact"
+        android:label="Contact"
         tools:layout="@layout/fragment_add_edit_contact">
 
         <argument

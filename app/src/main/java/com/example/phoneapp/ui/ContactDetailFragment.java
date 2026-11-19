@@ -1,5 +1,7 @@
 package com.example.phoneapp.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -44,13 +46,10 @@ public class ContactDetailFragment extends Fragment {
 
         viewModel = ((MainActivity) requireActivity()).getViewModel();
 
-        // Retrieve contactId passed via Safe Args
         contactId = ContactDetailFragmentArgs.fromBundle(getArguments()).getContactId();
 
-        // Load the contact
         viewModel.loadContactById(contactId);
         observeContact();
-
         setupMenu();
     }
 
@@ -83,17 +82,56 @@ public class ContactDetailFragment extends Fragment {
             contact.getNotes().isEmpty() ? "No notes" : contact.getNotes()
         );
 
+        // Favorite star
         binding.ivDetailFavorite.setImageResource(
             contact.isFavorite()
                 ? android.R.drawable.btn_star_big_on
                 : android.R.drawable.btn_star_big_off
         );
-
         binding.ivDetailFavorite.setOnClickListener(v -> {
             viewModel.toggleFavorite(contact.getId(), !contact.isFavorite());
-            viewModel.loadContactById(contactId); // Reload to reflect change
+            viewModel.loadContactById(contactId);
         });
 
+        // --- Action Buttons ---
+        // Call
+        binding.btnActionCall.setOnClickListener(v -> {
+            String phone = contact.getPhone();
+            if (!phone.isEmpty()) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phone));
+                startActivity(intent);
+            }
+        });
+
+        // Message (SMS)
+        binding.btnActionMessage.setOnClickListener(v -> {
+            String phone = contact.getPhone();
+            if (!phone.isEmpty()) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("smsto:" + phone));
+                startActivity(intent);
+            }
+        });
+
+        // Email
+        binding.btnActionEmail.setOnClickListener(v -> {
+            String email = contact.getEmail();
+            if (!email.isEmpty()) {
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:" + email));
+                startActivity(intent);
+            }
+        });
+
+        // Edit (inline action button)
+        binding.btnActionEdit.setOnClickListener(v -> {
+            ContactDetailFragmentDirections.ActionContactDetailFragmentToAddEditContactFragment action =
+                ContactDetailFragmentDirections.actionContactDetailFragmentToAddEditContactFragment(contact.getId());
+            NavHostFragment.findNavController(this).navigate(action);
+        });
+
+        // FAB edit (bottom right)
         binding.fabEditContact.setOnClickListener(v -> {
             ContactDetailFragmentDirections.ActionContactDetailFragmentToAddEditContactFragment action =
                 ContactDetailFragmentDirections.actionContactDetailFragmentToAddEditContactFragment(contact.getId());

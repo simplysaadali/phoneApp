@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import com.example.phoneapp.PhoneApplication;
+import com.example.phoneapp.data.CallLog;
 import com.example.phoneapp.data.Contact;
 import com.example.phoneapp.repository.ContactRepository;
 
@@ -29,6 +30,7 @@ public class ContactViewModel extends AndroidViewModel {
 
     private final LiveData<List<Contact>> contacts;
     private final LiveData<List<Contact>> favoriteContacts;
+    private final LiveData<List<CallLog>> callLogs;
 
     // Holds single contact loaded for detail / edit
     private final MutableLiveData<Contact> selectedContact = new MutableLiveData<>();
@@ -39,6 +41,7 @@ public class ContactViewModel extends AndroidViewModel {
         executor = Executors.newSingleThreadExecutor();
 
         favoriteContacts = repository.getFavoriteContacts();
+        callLogs = repository.getAllCallLogs();
 
         // Switch between all-contacts, search results, and favorites based on flags
         contacts = Transformations.switchMap(showFavorites, isFav -> {
@@ -57,6 +60,7 @@ public class ContactViewModel extends AndroidViewModel {
 
     public LiveData<List<Contact>> getContacts() { return contacts; }
     public LiveData<List<Contact>> getFavoriteContacts() { return favoriteContacts; }
+    public LiveData<List<CallLog>> getCallLogs() { return callLogs; }
     public LiveData<Contact> getSelectedContact() { return selectedContact; }
 
     public void setSearchQuery(String query) {
@@ -82,5 +86,18 @@ public class ContactViewModel extends AndroidViewModel {
 
     public void toggleFavorite(long id, boolean isFavorite) {
         repository.toggleFavorite(id, isFavorite);
+    }
+
+    // Call log actions
+    public void insertCallLog(CallLog callLog) {
+        repository.insertCallLog(callLog);
+    }
+
+    public void deleteCallLog(CallLog callLog) {
+        repository.deleteCallLog(callLog);
+    }
+
+    public void clearCallLogs() {
+        repository.clearCallLogs();
     }
 }

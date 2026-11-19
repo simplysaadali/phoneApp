@@ -14,7 +14,7 @@ public class PhoneApplication extends Application {
     public void onCreate() {
         super.onCreate();
         database = ContactDatabase.getDatabase(this);
-        repository = new ContactRepository(database.contactDao());
+        repository = new ContactRepository(database.contactDao(), database.callLogDao());
     }
 
     public ContactRepository getRepository() {

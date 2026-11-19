@@ -1,5 +1,6 @@
 package com.example.phoneapp.utils;
 
+import com.example.phoneapp.data.CallLog;
 import com.example.phoneapp.data.Contact;
 
 import java.util.ArrayList;
@@ -95,6 +96,33 @@ public class PakistaniDummyDataGenerator {
             contact.setFavorite(true);
         }
         return contact;
+    }
+
+    public static List<CallLog> generateDummyCallLogs() {
+        List<CallLog> logs = new ArrayList<>();
+        long now = System.currentTimeMillis();
+        long minute = 60 * 1000L;
+        long hour = 60 * minute;
+        long day = 24 * hour;
+
+        // 15 realistic recent calls
+        logs.add(new CallLog(0, "+92 300 1234567", "Muhammad Khan", CallLog.CallType.INCOMING.name(), 184, now - 12 * minute));
+        logs.add(new CallLog(0, "+92 321 9876543", "Fatima Ali", CallLog.CallType.OUTGOING.name(), 65, now - 45 * minute));
+        logs.add(new CallLog(0, "+92 333 4567890", "Usman Malik", CallLog.CallType.MISSED.name(), 0, now - 2 * hour));
+        logs.add(new CallLog(0, "+92 345 6789012", "Ayesha Sheikh", CallLog.CallType.INCOMING.name(), 340, now - 5 * hour));
+        logs.add(new CallLog(0, "+92 312 8765432", "Saad Chaudhry", CallLog.CallType.OUTGOING.name(), 120, now - 9 * hour));
+        logs.add(new CallLog(0, "+92 301 2345678", "Zainab Shah", CallLog.CallType.MISSED.name(), 0, now - 18 * hour));
+        logs.add(new CallLog(0, "+92 322 3456789", "Hamza Qureshi", CallLog.CallType.INCOMING.name(), 210, now - 1 * day - 2 * hour));
+        logs.add(new CallLog(0, "+92 308 5551234", "+92 308 5551234", CallLog.CallType.MISSED.name(), 0, now - 1 * day - 5 * hour));
+        logs.add(new CallLog(0, "+92 334 5678901", "Bilal Ahmed", CallLog.CallType.OUTGOING.name(), 85, now - 2 * day));
+        logs.add(new CallLog(0, "+92 315 9012345", "Maryam Siddiqui", CallLog.CallType.INCOMING.name(), 512, now - 2 * day - 4 * hour));
+        logs.add(new CallLog(0, "+92 302 7890123", "Omar Bhatti", CallLog.CallType.OUTGOING.name(), 42, now - 3 * day));
+        logs.add(new CallLog(0, "+92 346 1122334", "+92 346 1122334", CallLog.CallType.INCOMING.name(), 95, now - 4 * day));
+        logs.add(new CallLog(0, "+92 323 9988776", "Hassan Rajput", CallLog.CallType.MISSED.name(), 0, now - 5 * day));
+        logs.add(new CallLog(0, "+92 311 4455667", "Sana Abbasi", CallLog.CallType.OUTGOING.name(), 175, now - 6 * day));
+        logs.add(new CallLog(0, "+92 304 6677889", "Ali Syed", CallLog.CallType.INCOMING.name(), 260, now - 7 * day));
+
+        return logs;
     }
 
     private PakistaniDummyDataGenerator() { /* Utility */ }

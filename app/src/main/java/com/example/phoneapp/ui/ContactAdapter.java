@@ -1,8 +1,11 @@
 package com.example.phoneapp.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -70,14 +73,16 @@ public class ContactAdapter extends ListAdapter<Contact, ContactAdapter.ContactV
         private final TextView tvName;
         private final TextView tvPhone;
         private final ImageView ivFavorite;
+        private final ImageButton btnCallContact;
 
         ContactViewHolder(@NonNull View itemView) {
             super(itemView);
-            avatarBg  = itemView.findViewById(R.id.viewAvatarBg);
-            tvInitials = itemView.findViewById(R.id.tvContactInitials);
-            tvName    = itemView.findViewById(R.id.tvContactName);
-            tvPhone   = itemView.findViewById(R.id.tvContactPhone);
-            ivFavorite = itemView.findViewById(R.id.ivFavorite);
+            avatarBg       = itemView.findViewById(R.id.viewAvatarBg);
+            tvInitials     = itemView.findViewById(R.id.tvContactInitials);
+            tvName         = itemView.findViewById(R.id.tvContactName);
+            tvPhone        = itemView.findViewById(R.id.tvContactPhone);
+            ivFavorite     = itemView.findViewById(R.id.ivFavorite);
+            btnCallContact = itemView.findViewById(R.id.btnCallContact);
         }
 
         void bind(Contact contact) {
@@ -94,6 +99,17 @@ public class ContactAdapter extends ListAdapter<Contact, ContactAdapter.ContactV
 
             itemView.setOnClickListener(v -> listener.onContactClick(contact));
             ivFavorite.setOnClickListener(v -> listener.onFavoriteClick(contact));
+
+            if (btnCallContact != null) {
+                btnCallContact.setOnClickListener(v -> {
+                    String phone = contact.getPhone();
+                    if (!phone.isEmpty()) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:" + phone));
+                        itemView.getContext().startActivity(intent);
+                    }
+                });
+            }
         }
     }
 }
